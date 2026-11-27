@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AICoopCodeReview",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "verdict",
+    "summary",
+    "scope_check",
+    "acceptance_criteria",
+    "findings",
+    "test_assessment"
+  ],
+  "properties": {
+    "verdict": {
+      "type": "string",
+      "enum": ["approve", "request_changes", "blocked"],
+      "description": "存在 P0/P1 问题或任一验收标准为 missing/partial 时必须为 request_changes；缺环境无法评审时为 blocked；其余为 approve。"
+    },
+    "summary": {
+      "type": "string",
+      "description": "中文总体复核结论（2-4句话）。"
+    },
+    "scope_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["within_scope", "unexpected_files", "notes"],
+      "properties": {
+        "within_scope": {
+          "type": "boolean",
+          "description": "代码改动是否严格控制在简报允许范围内。"
+        },
+        "unexpected_files": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "超出范围或不应修改的文件路径列表，无则为空数组。"
+        },
+        "notes": {
+          "type": "string",
+          "description": "范围检查说明。"
+        }
+      }
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "description": "逐条对照任务简报中的验收标准进行核查。",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["criterion", "status", "evidence"],
+        "properties": {
+          "criterion": {
+            "type": "string",
+            "description": "验收标准内容。"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["met", "partial", "missing"],
+            "description": "met=已满足，partial=部分满足，missing=未满足。"
+          },
+          "evidence": {
+            "type": "string",
+            "description": "判定依据（具体文件、行号、逻辑或验证结果）。"
+          }
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "description": "发现的具体问题列表；无问题则为空数组。",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "severity", "file", "line", "title", "detail", "suggestion"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "问题编号，如 F1, F2。"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["P0", "P1", "P2", "P3"],
+            "description": "P0=崩溃/数据丢失/安全漏洞/核心不可用；P1=明确Bug或验收未达标；P2=健壮性/可维护性/测试缺口；P3=风格与命名小建议。"
+          },
+          "file": {
+            "type": "string",
+            "description": "相关文件相对路径。"
+          },
+          "line": {
+            "type": ["integer", "null"],
+            "description": "定位行号，无法定位单行时为 null。"
+          },
+          "title": {
+            "type": "string",
+            "description": "一句话问题标题。"
+          },
+          "detail": {
+            "type": "string",
+            "description": "问题原因、触发路径与潜在影响。"
+          },
+          "suggestion": {
+            "type": "string",
+            "description": "具体可落地的修复建议。"
+          }
+        }
+      }
+    },
+    "test_assessment": {
+      "type": "string",
+      "description": "对测试覆盖率、边界用例和验证输出真实性的评估。"
+    }
+  }
+}

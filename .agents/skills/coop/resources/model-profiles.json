@@ -1,0 +1,107 @@
+{
+  "default_profile": "standard",
+  "profiles": {
+    "quick": {
+      "description": "轻量快修、配置同步、小范围样板代码（极速省流模式）",
+      "antigravity": {
+        "recon_model": null,
+        "failover_implement_model": "flash",
+        "review_tier": "L1",
+        "review_subagent_model": "flash"
+      },
+      "codex_implement": {
+        "model": "gpt-6.2-sol",
+        "reasoning_effort": "low",
+        "service_tier": "default"
+      },
+      "codex_review": {
+        "enabled_by_default": false,
+        "model": "gpt-6.2-sol",
+        "reasoning_effort": "low",
+        "service_tier": "default"
+      }
+    },
+    "standard": {
+      "description": "常规功能开发、接口实现与常规重构（默认推荐）",
+      "antigravity": {
+        "recon_model": "flash",
+        "failover_implement_model": "pro",
+        "review_tier": "L2",
+        "review_subagent_model": "pro"
+      },
+      "codex_implement": {
+        "model": "gpt-6.2-sol",
+        "reasoning_effort": "high",
+        "service_tier": "default"
+      },
+      "codex_review": {
+        "enabled_by_default": false,
+        "model": "gpt-6.2-sol",
+        "reasoning_effort": "medium",
+        "service_tier": "default"
+      }
+    },
+    "deep-core": {
+      "description": "核心算法、并发状态机、复杂架构改造、疑难 Bug 与安全敏感代码",
+      "antigravity": {
+        "recon_model": "flash",
+        "architect_consult_model": "pro",
+        "failover_implement_model": "pro",
+        "review_tier": "L3",
+        "review_subagent_model": "pro"
+      },
+      "codex_implement": {
+        "model": "gpt-6.2-astra",
+        "reasoning_effort": "high",
+        "service_tier": "default"
+      },
+      "codex_review": {
+        "enabled_by_default": true,
+        "model": "gpt-6.2-astra",
+        "reasoning_effort": "high",
+        "service_tier": "default"
+      }
+    },
+    "ui-fullstack": {
+      "description": "前端界面、多模态设计稿还原与交互体验开发",
+      "antigravity": {
+        "recon_model": "flash",
+        "browser_qa_model": "flash",
+        "failover_implement_model": "pro",
+        "review_tier": "L2",
+        "review_subagent_model": "pro"
+      },
+      "codex_implement": {
+        "model": "gpt-6.1-terra",
+        "reasoning_effort": "high",
+        "service_tier": "default"
+      },
+      "codex_review": {
+        "enabled_by_default": false,
+        "model": "gpt-6.2-sol",
+        "reasoning_effort": "medium",
+        "service_tier": "default"
+      }
+    },
+    "batch-mech": {
+      "description": "批量机械修改、格式化、简单单测补充与重命名",
+      "antigravity": {
+        "recon_model": "flash_lite",
+        "failover_implement_model": "flash",
+        "review_tier": "L1",
+        "review_subagent_model": "flash"
+      },
+      "codex_implement": {
+        "model": "gpt-6-luna",
+        "reasoning_effort": "medium",
+        "service_tier": "default"
+      },
+      "codex_review": {
+        "enabled_by_default": false,
+        "model": "gpt-6-luna",
+        "reasoning_effort": "low",
+        "service_tier": "default"
+      }
+    }
+  }
+}
